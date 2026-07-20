@@ -284,3 +284,52 @@ def excluir_cliente(id_cliente):
 
         if banco.is_connected():
             banco.close()
+
+def atualizar_cliente(id_cliente, cliente):
+    banco = conectar()
+
+    if banco is None:
+        return False
+
+    cursor = None
+
+    try:
+        cursor = banco.cursor()
+
+        sql = """
+            UPDATE cliente
+            SET
+                nome = %s,
+                telefone = %s,
+                complemento = %s,
+                email = %s,
+                cpf = %s
+            WHERE id_cliente = %s
+        """
+
+        valores = (
+            cliente.nome,
+            cliente.telefone,
+            cliente.complemento,
+            cliente.email,
+            cliente.cpf,
+            id_cliente
+        )
+
+        cursor.execute(sql, valores)
+
+        banco.commit()
+
+        return cursor.rowcount > 0
+
+    except Exception as erro:
+        banco.rollback()
+        print(f"Erro ao atualizar cliente: {erro}")
+        return False
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if banco.is_connected():
+            banco.close()
