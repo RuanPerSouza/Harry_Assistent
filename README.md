@@ -1,5 +1,7 @@
 # Harry_Assistent
-Projeto pessoal para organização de OSs de reparos de celulares e cadastros de clientes 
+Um projeto pessoal voltado à organização de serviços de reparo de celulares e eletrônicos em geral. A ideia surgiu juntamente com um novo investimento: montar minha própria bancada em casa para garantir uma renda extra. Com isso, surgiu também a necessidade de organizar as ordens de serviço (OS), não apenas para o controle dos prazos de execução, mas também para a gestão financeira dos gastos com materiais e peças utilizados nos reparos.
+
+Inicialmente, a proposta era desenvolver algo mais simples, utilizando apenas MySQL e Python. No entanto, o projeto evoluiu e se tornou um sistema verdadeiramente robusto. Diante disso, decidi encarar esse desafio como uma oportunidade de aprofundar meus conhecimentos em Engenharia de Software, documentação e boas práticas no desenvolvimento de sistemas.
 
 🚀 Harry_Assistent Roadmap
 
