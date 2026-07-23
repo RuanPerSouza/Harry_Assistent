@@ -228,3 +228,40 @@ def atualizar_ordem_servico(ordem_servico):
 
         if conexao:
             conexao.close()
+
+def excluir_ordem_servico(id_os):
+    conexao = None
+    cursor = None
+
+    try:
+        conexao = conectar()
+        cursor = conexao.cursor()
+
+        sql = """
+            DELETE FROM ordem_servico
+            WHERE id_os = %s
+        """
+
+        cursor.execute(sql, (id_os,))
+        conexao.commit()
+
+        if cursor.rowcount == 0:
+            print("Ordem de Serviço não encontrada.")
+            return False
+
+        print("Ordem de Serviço excluída com sucesso.")
+        return True
+
+    except Exception as erro:
+        if conexao:
+            conexao.rollback()
+
+        print(f"Erro ao excluir Ordem de Serviço: {erro}")
+        return False
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if conexao:
+            conexao.close()

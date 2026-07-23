@@ -1,33 +1,27 @@
 from backend.repositories.ordem_servico_repository import (
     buscar_ordem_servico_por_id,
-    atualizar_ordem_servico
+    excluir_ordem_servico,
 )
-
-from backend.models.ordem_servico import OrdemServico
 
 
 def main():
+    id_os = 1
 
-    dados = buscar_ordem_servico_por_id(1)
+    ordem = buscar_ordem_servico_por_id(id_os)
 
-    ordem = OrdemServico(
-        id_os=dados["id_os"],
-        id_cliente=dados["id_cliente"],
-        data_entrada=dados["data_entrada"],
-        data_conclusao=dados["data_conclusao"],
-        status="Em reparo",
-        prioridade=dados["prioridade"],
-        mao_obra=dados["mao_obra"],
-        desconto=dados["desconto"],
-        status_pagamento=dados["status_pagamento"],
-        forma_pagamento=dados["forma_pagamento"],
-        numero_parcelas=dados["numero_parcelas"],
-        valor_pago=dados["valor_pago"],
-        equipamentos_recebidos=dados["equipamentos_recebidos"],
-        observacoes="Teste de atualização"
-    )
+    if ordem is None:
+        print("Ordem de Serviço não encontrada.")
+        return
 
-    atualizar_ordem_servico(ordem)
+    print(f"OS encontrada: {ordem['id_os']:06d}")
+    print(f"Cliente: {ordem['nome_cliente']}")
+
+    confirmar = input("Deseja realmente excluir esta OS? [s/n]: ").strip().lower()
+
+    if confirmar == "s":
+        excluir_ordem_servico(id_os)
+    else:
+        print("Exclusão cancelada.")
 
 
 if __name__ == "__main__":
