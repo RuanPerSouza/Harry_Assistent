@@ -23,18 +23,23 @@ Desenvolvimento
 ✅ GitHub
 ✅ Primeiro versionamento
 
-🚧 Versão 0.2 - Ordens de Serviço
-Status: Em desenvolvimento
-
-Banco
-⬜ Model Ordem de Serviço
-⬜ Repository Ordem de Serviço
-Backend
-⬜ CRUD Ordem de Serviço
-⬜ Status
-⬜ Prioridade
-Integração
-⬜ Cliente → Ordem de Serviço
+📦 Versão 0.2 - Status Atual
+Módulo Cliente
+✅ Model
+✅ Repository
+✅ CRUD completo
+Módulo Ordem de Serviço
+✅ Model
+✅ Cadastro
+✅ Listagem
+✅ Busca por ID
+✅ Atualização
+✅ Exclusão
+Banco de Dados
+✅ Cliente
+✅ Ordem de Serviço
+✅ Aparelho
+✅ Peças
 
 🔧 Versão 0.3 - Aparelhos
 
