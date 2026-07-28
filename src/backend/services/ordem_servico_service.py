@@ -1,30 +1,28 @@
 from backend.repositories.ordem_servico_repository import (
-    cadastrar_ordem_servico,
-    listar_ordens_servico,
-    buscar_ordem_servico_por_id,
-    atualizar_ordem_servico,
-    excluir_ordem_servico
+    OrdemServicoRepository
 )
 
 
 class OrdemServicoService:
 
-    @staticmethod
-    def cadastrar(ordem_servico):
-        return cadastrar_ordem_servico(ordem_servico)
+    repository = OrdemServicoRepository()
 
-    @staticmethod
-    def listar():
-        return listar_ordens_servico()
+    @classmethod
+    def cadastrar(cls, ordem_servico):
+        return cls.repository.cadastrar(ordem_servico)
 
-    @staticmethod
-    def buscar_por_id(id_os):
-        return buscar_ordem_servico_por_id(id_os)
+    @classmethod
+    def listar(cls):
+        return cls.repository.listar()
 
-    @staticmethod
-    def atualizar(ordem_servico):
-        return atualizar_ordem_servico(ordem_servico)
+    @classmethod
+    def buscar_por_id(cls, id_os):
+        return cls.repository.buscar_por_id(id_os)
 
-    @staticmethod
-    def excluir(id_os):
-        return excluir_ordem_servico(id_os)
+    @classmethod
+    def atualizar(cls, ordem_servico):
+        return cls.repository.atualizar(ordem_servico)
+
+    @classmethod
+    def excluir(cls, id_os):
+        return cls.repository.excluir(id_os)

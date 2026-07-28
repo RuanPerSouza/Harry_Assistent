@@ -37,7 +37,7 @@ class OrdemServico:
 
     def __init__(
         self,
-        id_cliente,
+        id_cliente=None,   
         status="Recebido",
         prioridade="Média",
         mao_obra=0,
