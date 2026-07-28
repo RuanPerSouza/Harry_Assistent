@@ -1,94 +1,170 @@
 # Harry_Assistent
-Um projeto pessoal voltado à organização de serviços de reparo de celulares e eletrônicos em geral. A ideia surgiu juntamente com um novo investimento: montar minha própria bancada em casa para garantir uma renda extra. Com isso, surgiu também a necessidade de organizar as ordens de serviço (OS), não apenas para o controle dos prazos de execução, mas também para a gestão financeira dos gastos com materiais e peças utilizados nos reparos.
 
-Inicialmente, a proposta era desenvolver algo mais simples, utilizando apenas MySQL e Python. No entanto, o projeto evoluiu e se tornou um sistema verdadeiramente robusto. Diante disso, decidi encarar esse desafio como uma oportunidade de aprofundar meus conhecimentos em Engenharia de Software, documentação e boas práticas no desenvolvimento de sistemas.
+Sistema para gerenciamento de ordens de serviço de assistência técnica voltado para reparos de celulares, notebooks e eletrônicos em geral.
 
-🚀 Harry_Assistent Roadmap
+> Projeto pessoal desenvolvido para estudo de Engenharia de Software, Python e MySQL, inspirado na necessidade de organizar minha própria bancada de manutenção.
 
-✅ Versão 0.1 - Fundação
-Status: Concluída
+---
 
-Banco de Dados
-✅ Modelagem
-✅ MySQL
-✅ Relacionamentos
-Backend
-✅ Conexão
-✅ Model Cliente
-✅ Repository Cliente
-✅ CRUD Cliente
-Desenvolvimento
-✅ Estrutura do projeto
-✅ Menu de testes
-✅ GitHub
-✅ Primeiro versionamento
+# 📖 Sobre o projeto
 
-📦 Versão 0.2 - Status Atual
-Módulo Cliente
-✅ Model
-✅ Repository
-✅ CRUD completo
-Módulo Ordem de Serviço
-✅ Model
-✅ Cadastro
-✅ Listagem
-✅ Busca por ID
-✅ Atualização
-✅ Exclusão
-Banco de Dados
-✅ Cliente
-✅ Ordem de Serviço
-✅ Aparelho
-✅ Peças
+O Harry_Assistent nasceu com o objetivo de organizar os serviços realizados em uma assistência técnica doméstica.
 
-🔧 Versão 0.3 - Aparelhos
+Além do controle das Ordens de Serviço (OS), o sistema busca oferecer ferramentas para gestão financeira, controle de peças, histórico de reparos e acompanhamento dos equipamentos recebidos.
 
-Celulares
-Notebooks
-IMEI
-Número de Série
-Senha
-Defeito informado
-Estado do aparelho
+O projeto também serve como laboratório para aplicação de conceitos de:
 
-💰 Versão 0.4 - Orçamentos
+- Engenharia de Software
+- Arquitetura em Camadas
+- Programação Orientada a Objetos
+- Modelagem de Banco de Dados
+- Documentação
+- Boas práticas de desenvolvimento
 
-Cadastro de peças
-Mão de obra
-Desconto
-Valor total automático
-Gerador de orçamento
-Mensagem para WhatsApp
-Copiar mensagem
+---
 
-🖥️ Versão 0.5 - Interface
+# 🛠 Tecnologias
 
-Teremos:
+- Python
+- MySQL
+- Git
+- GitHub
+- VS Code
 
-Dashboard
-Tela de Clientes
-Tela de OS
-Tela de Bancada
-📄 Versão 0.6
-PDF da Ordem de Serviço
-Impressão
-Relatórios
+---
 
-📊 Versão 0.7 Financeiro
+# 📂 Estrutura do Projeto
 
-Entradas
-Saídas
-Lucro
-Gráficos
+backend/
+├── models/
+├── repositories/
+├── services/
+├── utils/
+├── exceptions/
+├── menu.py
+├── main.py
+└── conexao.py
 
-📦 Versão 0.8 Estoque (opcional)
+---
 
-⭐ Versão 0.9 Melhorias
+# 🚀 Roadmap
 
-Configurações
-Backup
-Logs
-Timeline
+## ✅ Versão 0.1 - Fundação
 
-🎉 Versão 1.0
+### Banco de Dados
+
+- ✅ Modelagem
+- ✅ MySQL
+- ✅ Relacionamentos
+
+### Backend
+
+- ✅ Conexão
+- ✅ Model Cliente
+- ✅ Repository Cliente
+- ✅ CRUD Cliente
+
+### Desenvolvimento
+
+- ✅ Estrutura do projeto
+- ✅ Menu de testes
+- ✅ GitHub
+- ✅ Primeiro versionamento
+
+---
+
+## ✅ Versão 0.2 - Ordem de Serviço
+
+### Cliente
+
+- ✅ CRUD completo
+
+### Ordem de Serviço
+
+- ✅ Model
+- ✅ CRUD completo
+
+### Banco
+
+- ✅ Cliente
+- ✅ Ordem de Serviço
+- ✅ Aparelho
+- ✅ Peças
+
+### Arquitetura
+
+- ✅ BaseRepository
+- ✅ Services
+- ✅ Repositories orientados a objeto
+
+---
+
+## 🔧 Versão 0.3 - Aparelhos
+
+- Cadastro de aparelhos
+- IMEI
+- Número de série
+- Senha
+- Defeito informado
+- Estado do aparelho
+
+---
+
+## 💰 Versão 0.4 - Orçamentos
+
+- Cadastro de peças
+- Mão de obra
+- Descontos
+- Valor automático
+- Orçamento para WhatsApp
+
+---
+
+## 🖥️ Versão 0.5 - Interface
+
+- Dashboard
+- Clientes
+- Ordens de Serviço
+- Bancada
+
+---
+
+## 📄 Versão 0.6 - Documentos
+
+- PDF da Ordem de Serviço
+- Impressão
+- Relatórios
+
+---
+
+## 📊 Versão 0.7 - Financeiro
+
+- Entradas
+- Saídas
+- Lucro
+- Gráficos
+
+---
+
+## 📦 Versão 0.8 - Estoque
+
+- Controle de estoque
+- Baixa automática
+- Histórico
+
+---
+
+## ⭐ Versão 0.9 - Melhorias
+
+- Configurações
+- Backup
+- Logs
+- Timeline
+
+---
+
+## 🎉 Versão 1.0
+
 Primeira versão estável.
+
+Um projeto pessoal voltado à organização de serviços de reparo de celulares e eletrônicos em geral. A ideia surgiu juntamente com um novo investimento: montar minha própria bancada em casa para garantir uma renda extra. Com isso, surgiu também a necessidade de organizar as ordens de serviço (OS), não apenas para o controle dos prazos de execução, mas também para a gestão financeira dos gastos com materiais e peças utilizados nos reparos.
