@@ -1,46 +1,87 @@
-from datetime import datetime
-
-from backend.models.ordem_servico import OrdemServico
-from backend.services.ordem_servico_service import OrdemServicoService
+from backend.models.aparelho import Aparelho
+from backend.services.aparelho_service import AparelhoService
 
 
-def main():
-    ordem = OrdemServico(
-        id_cliente=1,
-        data_entrada=datetime.now(),
-        status="Recebido",
-        prioridade="Média",
-        mao_obra=100.00,
-        desconto=0,
-        status_pagamento="Aguardando pagamento",
-        forma_pagamento=None,
-        numero_parcelas=1,
-        valor_pago=0,
-        equipamentos_recebidos="Celular Samsung",
-        observacoes="Aparelho não liga."
+def testar_aparelho():
+    print("\n=== 1. CADASTRO ===")
+
+    aparelho = Aparelho(
+        id_os=3,
+        tipo="Celular",
+        marca="Samsung",
+        modelo="Galaxy S22",
+        cor="Preto",
+        imei="123456789012345",
+        numero_serie="SN123456",
+        senha="1234",
+        defeito_informado="Aparelho não está carregando.",
+        estado_aparelho="Tela riscada e marcas de uso na carcaça."
     )
 
-    cadastrado = OrdemServicoService.cadastrar(ordem)
+    cadastrado = AparelhoService.cadastrar(aparelho)
 
     if not cadastrado:
-        print("Não foi possível cadastrar a Ordem de Serviço.")
+        print("O teste foi interrompido porque o cadastro falhou.")
         return
 
-    print(f"ID gerado: {ordem.id_os}")
+    print(f"ID gerado: {aparelho.id_aparelho}")
 
-    ordem_encontrada = OrdemServicoService.buscar_por_id(ordem.id_os)
+    print("\n=== 2. BUSCA POR ID ===")
 
-    if ordem_encontrada is None:
-        print("A Ordem de Serviço foi cadastrada, mas não foi encontrada.")
-        return
+    aparelho_encontrado = AparelhoService.buscar_por_id(
+        aparelho.id_aparelho
+    )
 
-    print("\nOrdem de Serviço encontrada:")
-    print(f"OS: {ordem_encontrada['id_os']:06d}")
-    print(f"Cliente: {ordem_encontrada['nome_cliente']}")
-    print(f"Status: {ordem_encontrada['status']}")
-    print(f"Prioridade: {ordem_encontrada['prioridade']}")
-    print(f"Mão de obra: R$ {ordem_encontrada['mao_obra']:.2f}")
+    print(aparelho_encontrado)
+
+    print("\n=== 3. LISTAGEM GERAL ===")
+
+    aparelhos = AparelhoService.listar()
+
+    for item in aparelhos:
+        print(item)
+
+    print("\n=== 4. LISTAGEM POR ORDEM DE SERVIÇO ===")
+
+    aparelhos_da_os = AparelhoService.listar_por_ordem_servico(
+        aparelho.id_os
+    )
+
+    for item in aparelhos_da_os:
+        print(item)
+
+    print("\n=== 5. ATUALIZAÇÃO ===")
+
+    aparelho.modelo = "Galaxy S22 5G"
+    aparelho.cor = "Preto fosco"
+    aparelho.defeito_informado = "Conector de carga com mau contato."
+    aparelho.estado_aparelho = (
+        "Tela riscada, carcaça marcada e tampa traseira trincada."
+    )
+
+    atualizado = AparelhoService.atualizar(aparelho)
+
+    if atualizado:
+        aparelho_atualizado = AparelhoService.buscar_por_id(
+            aparelho.id_aparelho
+        )
+
+        print(aparelho_atualizado)
+
+    print("\n=== 6. EXCLUSÃO ===")
+
+    excluido = AparelhoService.excluir(aparelho.id_aparelho)
+
+    if excluido:
+        resultado = AparelhoService.buscar_por_id(
+            aparelho.id_aparelho
+        )
+
+        if resultado is None:
+            print("Teste concluído: aparelho removido do banco.")
+        else:
+            print("Erro: o aparelho ainda existe no banco.")
 
 
 if __name__ == "__main__":
-    main()
+    testar_aparelho()
