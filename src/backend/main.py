@@ -1,87 +1,65 @@
-from backend.models.aparelho import Aparelho
-from backend.services.aparelho_service import AparelhoService
+from backend.builders.gerador_orcamento import GeradorOrcamento
+from backend.models.peca import Peca
+from backend.services.peca_service import PecaService
 
 
-def testar_aparelho():
-    print("\n=== 1. CADASTRO ===")
+def main():
+    id_os = 3
 
-    aparelho = Aparelho(
-        id_os=3,
-        tipo="Celular",
-        marca="Samsung",
-        modelo="Galaxy S22",
-        cor="Preto",
-        imei="123456789012345",
-        numero_serie="SN123456",
-        senha="1234",
-        defeito_informado="Aparelho não está carregando.",
-        estado_aparelho="Tela riscada e marcas de uso na carcaça."
+    print("\n=== CADASTRO DAS PEÇAS ===")
+
+    tela = Peca(
+        id_os=id_os,
+        descricao="Tela OLED Samsung Galaxy S22",
+        quantidade=1,
+        valor_unitario=850
     )
 
-    cadastrado = AparelhoService.cadastrar(aparelho)
+    conectores = Peca(
+        id_os=id_os,
+        descricao="Conector USB-C",
+        quantidade=2,
+        valor_unitario=25
+    )
 
-    if not cadastrado:
-        print("O teste foi interrompido porque o cadastro falhou.")
+    cadastrou_tela = PecaService.cadastrar(tela)
+    cadastrou_conectores = PecaService.cadastrar(conectores)
+
+    if not cadastrou_tela or not cadastrou_conectores:
+        print("Não foi possível cadastrar todas as peças.")
         return
 
-    print(f"ID gerado: {aparelho.id_aparelho}")
+    print(f"Peça 1 criada com ID: {tela.id_peca}")
+    print(f"Peça 2 criada com ID: {conectores.id_peca}")
 
-    print("\n=== 2. BUSCA POR ID ===")
+    print("\n=== ORÇAMENTO GERADO ===")
 
-    aparelho_encontrado = AparelhoService.buscar_por_id(
-        aparelho.id_aparelho
-    )
+    orcamento = GeradorOrcamento.gerar(id_os)
 
-    print(aparelho_encontrado)
+    if orcamento is None:
+        print("Não foi possível gerar o orçamento.")
+        return
 
-    print("\n=== 3. LISTAGEM GERAL ===")
+    print(orcamento)
 
-    aparelhos = AparelhoService.listar()
+    print("\n=== CONFERÊNCIA DOS VALORES ===")
 
-    for item in aparelhos:
-        print(item)
+    totais = PecaService.calcular_total_ordem_servico(id_os)
 
-    print("\n=== 4. LISTAGEM POR ORDEM DE SERVIÇO ===")
+    if totais is None:
+        print("Não foi possível calcular os totais.")
+        return
 
-    aparelhos_da_os = AparelhoService.listar_por_ordem_servico(
-        aparelho.id_os
-    )
+    print(f"Total das peças: {totais['total_pecas']}")
+    print(f"Mão de obra: {totais['mao_obra']}")
+    print(f"Desconto: {totais['desconto']}")
+    print(f"Total final: {totais['total']}")
 
-    for item in aparelhos_da_os:
-        print(item)
+    print("\n=== LIMPEZA DOS DADOS DE TESTE ===")
 
-    print("\n=== 5. ATUALIZAÇÃO ===")
-
-    aparelho.modelo = "Galaxy S22 5G"
-    aparelho.cor = "Preto fosco"
-    aparelho.defeito_informado = "Conector de carga com mau contato."
-    aparelho.estado_aparelho = (
-        "Tela riscada, carcaça marcada e tampa traseira trincada."
-    )
-
-    atualizado = AparelhoService.atualizar(aparelho)
-
-    if atualizado:
-        aparelho_atualizado = AparelhoService.buscar_por_id(
-            aparelho.id_aparelho
-        )
-
-        print(aparelho_atualizado)
-
-    print("\n=== 6. EXCLUSÃO ===")
-
-    excluido = AparelhoService.excluir(aparelho.id_aparelho)
-
-    if excluido:
-        resultado = AparelhoService.buscar_por_id(
-            aparelho.id_aparelho
-        )
-
-        if resultado is None:
-            print("Teste concluído: aparelho removido do banco.")
-        else:
-            print("Erro: o aparelho ainda existe no banco.")
+    PecaService.excluir(tela.id_peca)
+    PecaService.excluir(conectores.id_peca)
 
 
 if __name__ == "__main__":
-    testar_aparelho()
+    main()
