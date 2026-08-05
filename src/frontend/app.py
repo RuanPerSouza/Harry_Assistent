@@ -2,7 +2,7 @@ import customtkinter as ctk
 
 from frontend.telas.dashboard import DashboardFrame
 from frontend.telas.tela_em_construcao import TelaEmConstrucao
-
+from frontend.telas.dashboard import DashboardFrame
 
 class HarryAssistentApp(ctk.CTk):
 
