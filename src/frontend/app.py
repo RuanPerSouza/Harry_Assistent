@@ -1,5 +1,8 @@
 import customtkinter as ctk
 
+from frontend.telas.dashboard import DashboardFrame
+from frontend.telas.tela_em_construcao import TelaEmConstrucao
+
 
 class HarryAssistentApp(ctk.CTk):
 
@@ -13,7 +16,10 @@ class HarryAssistentApp(ctk.CTk):
         self.geometry("1200x700")
         self.minsize(1000, 600)
 
+        self.tela_atual = None
+
         self.criar_layout()
+        self.mostrar_dashboard()
 
     def criar_layout(self):
         self.grid_columnconfigure(1, weight=1)
@@ -31,23 +37,24 @@ class HarryAssistentApp(ctk.CTk):
         )
         self.menu_lateral.grid_propagate(False)
 
-        self.conteudo = ctk.CTkFrame(
+        self.area_conteudo = ctk.CTkFrame(
             self,
             corner_radius=0
         )
-        self.conteudo.grid(
+        self.area_conteudo.grid(
             row=0,
             column=1,
             sticky="nsew"
         )
+        self.area_conteudo.grid_columnconfigure(0, weight=1)
+        self.area_conteudo.grid_rowconfigure(0, weight=1)
 
         self.criar_menu()
-        self.criar_tela_inicial()
 
     def criar_menu(self):
         titulo = ctk.CTkLabel(
             self.menu_lateral,
-            text="Harry_Assistent",
+            text="Harry Assistent",
             font=ctk.CTkFont(
                 size=22,
                 weight="bold"
@@ -56,19 +63,26 @@ class HarryAssistentApp(ctk.CTk):
         titulo.pack(pady=(30, 40))
 
         botoes = (
-            "Dashboard",
-            "Clientes",
-            "Ordens de Serviço",
-            "Aparelhos",
-            "Peças",
-            "Financeiro",
-            "Configurações",
+            ("Dashboard", self.mostrar_dashboard),
+            ("Clientes", lambda: self.mostrar_tela_generica("Clientes")),
+            (
+                "Ordens de Serviço",
+                lambda: self.mostrar_tela_generica("Ordens de Serviço")
+            ),
+            ("Aparelhos", lambda: self.mostrar_tela_generica("Aparelhos")),
+            ("Peças", lambda: self.mostrar_tela_generica("Peças")),
+            ("Financeiro", lambda: self.mostrar_tela_generica("Financeiro")),
+            (
+                "Configurações",
+                lambda: self.mostrar_tela_generica("Configurações")
+            ),
         )
 
-        for texto in botoes:
+        for texto, comando in botoes:
             botao = ctk.CTkButton(
                 self.menu_lateral,
                 text=texto,
+                command=comando,
                 anchor="w",
                 height=42
             )
@@ -78,29 +92,28 @@ class HarryAssistentApp(ctk.CTk):
                 pady=6
             )
 
-    def criar_tela_inicial(self):
-        titulo = ctk.CTkLabel(
-            self.conteudo,
-            text="Dashboard",
-            font=ctk.CTkFont(
-                size=28,
-                weight="bold"
-            )
-        )
-        titulo.pack(
-            anchor="w",
-            padx=30,
-            pady=(30, 10)
+    def trocar_tela(self, nova_tela):
+        if self.tela_atual is not None:
+            self.tela_atual.destroy()
+
+        self.tela_atual = nova_tela
+        self.tela_atual.grid(
+            row=0,
+            column=0,
+            sticky="nsew"
         )
 
-        subtitulo = ctk.CTkLabel(
-            self.conteudo,
-            text="Visão geral da assistência técnica",
-            font=ctk.CTkFont(size=15)
+    def mostrar_dashboard(self):
+        self.trocar_tela(
+            DashboardFrame(self.area_conteudo)
         )
-        subtitulo.pack(
-            anchor="w",
-            padx=30
+
+    def mostrar_tela_generica(self, titulo):
+        self.trocar_tela(
+            TelaEmConstrucao(
+                self.area_conteudo,
+                titulo
+            )
         )
 
 
