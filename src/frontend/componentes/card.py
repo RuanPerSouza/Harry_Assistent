@@ -1,18 +1,20 @@
 import customtkinter as ctk
 
+from frontend.tema import (
+    COR_BORDA,
+    COR_COMPONENTE,
+    COR_PRIMARIA,
+    COR_TEXTO_SECUNDARIO,
+    FONTE_EMOJI,
+    FONTE_PADRAO,
+    RAIO_COMPONENTE,
+    TAMANHO_DESTAQUE,
+    TAMANHO_TEXTO,
+)
+
 
 class CardInformacao(ctk.CTkFrame):
-    """
-    Card reutilizável para exibir indicadores no Dashboard.
-
-    Exemplo:
-        CardInformacao(
-            master,
-            titulo="OS em andamento",
-            valor="12",
-            icone="📋"
-        )
-    """
+    """Card reutilizável para indicadores do Dashboard."""
 
     def __init__(
         self,
@@ -20,13 +22,14 @@ class CardInformacao(ctk.CTkFrame):
         titulo,
         valor,
         icone="",
-        cor_destaque="#2563EB"
+        cor_destaque=COR_PRIMARIA
     ):
         super().__init__(
             master,
-            corner_radius=12,
+            fg_color=COR_COMPONENTE,
+            corner_radius=RAIO_COMPONENTE,
             border_width=1,
-            border_color="#3A3A3A"
+            border_color=COR_BORDA
         )
 
         self.grid_columnconfigure(0, weight=1)
@@ -35,7 +38,7 @@ class CardInformacao(ctk.CTkFrame):
             self,
             text=icone,
             font=ctk.CTkFont(
-                family="Segoe UI Emoji",
+                family=FONTE_EMOJI,
                 size=26
             )
         )
@@ -51,10 +54,10 @@ class CardInformacao(ctk.CTkFrame):
             self,
             text=titulo,
             font=ctk.CTkFont(
-                family="Segoe UI",
-                size=14
+                family=FONTE_PADRAO,
+                size=TAMANHO_TEXTO
             ),
-            text_color="gray70"
+            text_color=COR_TEXTO_SECUNDARIO
         )
         self.label_titulo.grid(
             row=1,
@@ -67,8 +70,8 @@ class CardInformacao(ctk.CTkFrame):
             self,
             text=valor,
             font=ctk.CTkFont(
-                family="Segoe UI",
-                size=27,
+                family=FONTE_PADRAO,
+                size=TAMANHO_DESTAQUE,
                 weight="bold"
             ),
             text_color=cor_destaque
@@ -82,6 +85,4 @@ class CardInformacao(ctk.CTkFrame):
         )
 
     def atualizar_valor(self, novo_valor):
-        """Atualiza o valor exibido no card."""
-
         self.label_valor.configure(text=str(novo_valor))

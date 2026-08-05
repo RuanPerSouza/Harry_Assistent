@@ -2,7 +2,14 @@ import customtkinter as ctk
 
 from frontend.telas.dashboard import DashboardFrame
 from frontend.telas.tela_em_construcao import TelaEmConstrucao
-from frontend.telas.dashboard import DashboardFrame
+from frontend.tema import (
+    COR_FUNDO,
+    COR_MENU_LATERAL,
+    COR_PRIMARIA,
+    COR_PRIMARIA_HOVER,
+    LARGURA_MENU,
+)
+
 
 class HarryAssistentApp(ctk.CTk):
 
@@ -12,11 +19,13 @@ class HarryAssistentApp(ctk.CTk):
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
 
-        self.title("Harry_Assistent")
+        self.title("Harry Assistent")
         self.geometry("1200x700")
         self.minsize(1000, 600)
+        self.configure(fg_color=COR_FUNDO)
 
         self.tela_atual = None
+        self.botoes_menu = {}
 
         self.criar_layout()
         self.mostrar_dashboard()
@@ -27,8 +36,9 @@ class HarryAssistentApp(ctk.CTk):
 
         self.menu_lateral = ctk.CTkFrame(
             self,
-            width=220,
-            corner_radius=0
+            width=LARGURA_MENU,
+            corner_radius=0,
+            fg_color=COR_MENU_LATERAL
         )
         self.menu_lateral.grid(
             row=0,
@@ -39,7 +49,8 @@ class HarryAssistentApp(ctk.CTk):
 
         self.area_conteudo = ctk.CTkFrame(
             self,
-            corner_radius=0
+            corner_radius=0,
+            fg_color=COR_FUNDO
         )
         self.area_conteudo.grid(
             row=0,
@@ -56,25 +67,55 @@ class HarryAssistentApp(ctk.CTk):
             self.menu_lateral,
             text="Harry Assistent",
             font=ctk.CTkFont(
+                family="Segoe UI",
                 size=22,
                 weight="bold"
             )
         )
-        titulo.pack(pady=(30, 40))
+        titulo.pack(
+            pady=(30, 40)
+        )
 
         botoes = (
-            ("Dashboard", self.mostrar_dashboard),
-            ("Clientes", lambda: self.mostrar_tela_generica("Clientes")),
+            (
+                "Dashboard",
+                self.mostrar_dashboard
+            ),
+            (
+                "Clientes",
+                lambda: self.mostrar_tela_generica(
+                    "Clientes"
+                )
+            ),
             (
                 "Ordens de Serviço",
-                lambda: self.mostrar_tela_generica("Ordens de Serviço")
+                lambda: self.mostrar_tela_generica(
+                    "Ordens de Serviço"
+                )
             ),
-            ("Aparelhos", lambda: self.mostrar_tela_generica("Aparelhos")),
-            ("Peças", lambda: self.mostrar_tela_generica("Peças")),
-            ("Financeiro", lambda: self.mostrar_tela_generica("Financeiro")),
+            (
+                "Aparelhos",
+                lambda: self.mostrar_tela_generica(
+                    "Aparelhos"
+                )
+            ),
+            (
+                "Peças",
+                lambda: self.mostrar_tela_generica(
+                    "Peças"
+                )
+            ),
+            (
+                "Financeiro",
+                lambda: self.mostrar_tela_generica(
+                    "Financeiro"
+                )
+            ),
             (
                 "Configurações",
-                lambda: self.mostrar_tela_generica("Configurações")
+                lambda: self.mostrar_tela_generica(
+                    "Configurações"
+                )
             ),
         )
 
@@ -82,21 +123,42 @@ class HarryAssistentApp(ctk.CTk):
             botao = ctk.CTkButton(
                 self.menu_lateral,
                 text=texto,
-                command=comando,
+                command=lambda t=texto, c=comando: (
+                    self.selecionar_botao(t),
+                    c()
+                ),
                 anchor="w",
-                height=42
+                height=42,
+                fg_color="transparent",
+                hover_color=COR_PRIMARIA_HOVER,
+                border_spacing=10
             )
+
             botao.pack(
                 fill="x",
                 padx=20,
                 pady=6
             )
 
+            self.botoes_menu[texto] = botao
+
+    def selecionar_botao(self, nome_botao):
+        for nome, botao in self.botoes_menu.items():
+            if nome == nome_botao:
+                botao.configure(
+                    fg_color=COR_PRIMARIA
+                )
+            else:
+                botao.configure(
+                    fg_color="transparent"
+                )
+
     def trocar_tela(self, nova_tela):
         if self.tela_atual is not None:
             self.tela_atual.destroy()
 
         self.tela_atual = nova_tela
+
         self.tela_atual.grid(
             row=0,
             column=0,
@@ -104,8 +166,12 @@ class HarryAssistentApp(ctk.CTk):
         )
 
     def mostrar_dashboard(self):
+        self.selecionar_botao("Dashboard")
+
         self.trocar_tela(
-            DashboardFrame(self.area_conteudo)
+            DashboardFrame(
+                self.area_conteudo
+            )
         )
 
     def mostrar_tela_generica(self, titulo):

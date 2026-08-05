@@ -1,10 +1,27 @@
 import customtkinter as ctk
 
+from frontend.tema import (
+    COR_ATENCAO,
+    COR_COMPONENTE,
+    COR_ERRO,
+    COR_INFORMACAO,
+    COR_SUCESSO,
+    FONTE_EMOJI,
+    FONTE_PADRAO,
+    RAIO_COMPONENTE,
+    TAMANHO_TEXTO,
+)
+
 
 class PainelStatus(ctk.CTkFrame):
-    """
-    Painel reutilizável para exibir avisos e mensagens do sistema.
-    """
+    """Painel para mensagens e avisos apresentados pelo Harry."""
+
+    CORES = {
+        "informacao": COR_INFORMACAO,
+        "sucesso": COR_SUCESSO,
+        "atencao": COR_ATENCAO,
+        "erro": COR_ERRO
+    }
 
     def __init__(
         self,
@@ -12,23 +29,17 @@ class PainelStatus(ctk.CTkFrame):
         mensagem="Tudo certo por aqui.",
         tipo="informacao"
     ):
-        cores = {
-            "informacao": "#2563EB",
-            "sucesso": "#22C55E",
-            "atencao": "#F59E0B",
-            "erro": "#EF4444"
-        }
-
-        cor_destaque = cores.get(
+        self.cor_destaque = self.CORES.get(
             tipo,
-            cores["informacao"]
+            COR_INFORMACAO
         )
 
         super().__init__(
             master,
-            corner_radius=12,
+            fg_color=COR_COMPONENTE,
+            corner_radius=RAIO_COMPONENTE,
             border_width=1,
-            border_color=cor_destaque
+            border_color=self.cor_destaque
         )
 
         self.grid_columnconfigure(1, weight=1)
@@ -37,7 +48,7 @@ class PainelStatus(ctk.CTkFrame):
             self,
             text="🔧",
             font=ctk.CTkFont(
-                family="Segoe UI Emoji",
+                family=FONTE_EMOJI,
                 size=30
             )
         )
@@ -53,11 +64,11 @@ class PainelStatus(ctk.CTkFrame):
             self,
             text="Harry diz:",
             font=ctk.CTkFont(
-                family="Segoe UI",
+                family=FONTE_PADRAO,
                 size=17,
                 weight="bold"
             ),
-            text_color=cor_destaque
+            text_color=self.cor_destaque
         )
         self.label_titulo.grid(
             row=0,
@@ -71,8 +82,8 @@ class PainelStatus(ctk.CTkFrame):
             self,
             text=mensagem,
             font=ctk.CTkFont(
-                family="Segoe UI",
-                size=14
+                family=FONTE_PADRAO,
+                size=TAMANHO_TEXTO
             ),
             justify="left",
             anchor="w",
@@ -91,24 +102,11 @@ class PainelStatus(ctk.CTkFrame):
         mensagem,
         tipo="informacao"
     ):
-        cores = {
-            "informacao": "#2563EB",
-            "sucesso": "#22C55E",
-            "atencao": "#F59E0B",
-            "erro": "#EF4444"
-        }
-
-        cor_destaque = cores.get(
+        cor = self.CORES.get(
             tipo,
-            cores["informacao"]
+            COR_INFORMACAO
         )
 
-        self.configure(
-            border_color=cor_destaque
-        )
-        self.label_titulo.configure(
-            text_color=cor_destaque
-        )
-        self.label_mensagem.configure(
-            text=mensagem
-        )
+        self.configure(border_color=cor)
+        self.label_titulo.configure(text_color=cor)
+        self.label_mensagem.configure(text=mensagem)
