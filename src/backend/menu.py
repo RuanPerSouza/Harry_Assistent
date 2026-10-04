@@ -1,14 +1,5 @@
-from backend.repositories.cliente_repository import buscar_cliente_por_id
-
-
 from backend.models.cliente import Cliente
-from backend.repositories.cliente_repository import (
-    cadastrar_cliente,
-    listar_clientes,
-    buscar_cliente_por_id,
-    atualizar_cliente,
-    excluir_cliente
-)
+from backend.services.cliente_service import ClienteService
 
 
 def ler_id_cliente():
@@ -40,7 +31,7 @@ def cadastrar():
         cpf=cpf
     )
 
-    sucesso = cadastrar_cliente(cliente)
+    sucesso = ClienteService.cadastrar(cliente)
 
     if sucesso:
         print("\nCliente cadastrado com sucesso!")
@@ -51,7 +42,7 @@ def cadastrar():
 def listar():
     print("\n=== LISTA DE CLIENTES ===")
 
-    clientes = listar_clientes()
+    clientes = ClienteService.listar()
 
     if not clientes:
         print("Nenhum cliente cadastrado.")
@@ -75,7 +66,7 @@ def buscar():
     if id_cliente is None:
         return
 
-    cliente = buscar_cliente_por_id(id_cliente)
+    cliente = ClienteService.buscar_por_id(id_cliente)
 
     if not cliente:
         print("\nCliente não encontrado.")
@@ -99,7 +90,7 @@ def atualizar():
     if id_cliente is None:
         return
 
-    cliente_atual = buscar_cliente_por_id(id_cliente)
+    cliente_atual = ClienteService.buscar_por_id(id_cliente)
 
     if not cliente_atual:
         print("\nCliente não encontrado.")
@@ -134,7 +125,7 @@ def atualizar():
         cpf=cpf or cpf_atual or None
     )
 
-    sucesso = atualizar_cliente(id_cliente, cliente)
+    sucesso = ClienteService.atualizar(id_cliente, cliente)
 
     if sucesso:
         print("\nCliente atualizado com sucesso!")
@@ -150,7 +141,7 @@ def excluir():
     if id_cliente is None:
         return
 
-    cliente = buscar_cliente_por_id(id_cliente)
+    cliente = ClienteService.buscar_por_id(id_cliente)
 
     if not cliente:
         print("\nCliente não encontrado.")
@@ -163,7 +154,7 @@ def excluir():
         print("\nExclusão cancelada.")
         return
 
-    sucesso = excluir_cliente(id_cliente)
+    sucesso = ClienteService.excluir(id_cliente)
 
     if sucesso:
         print("\nCliente excluído com sucesso!")

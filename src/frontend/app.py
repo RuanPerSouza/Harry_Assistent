@@ -1,6 +1,8 @@
 import customtkinter as ctk
 
+from frontend.telas.clientes import ClientesFrame
 from frontend.telas.dashboard import DashboardFrame
+from frontend.telas.ordens_servico import OrdensServicoFrame
 from frontend.telas.tela_em_construcao import TelaEmConstrucao
 from frontend.tema import (
     COR_FUNDO,
@@ -83,15 +85,11 @@ class HarryAssistentApp(ctk.CTk):
             ),
             (
                 "Clientes",
-                lambda: self.mostrar_tela_generica(
-                    "Clientes"
-                )
+                self.mostrar_clientes
             ),
             (
                 "Ordens de Serviço",
-                lambda: self.mostrar_tela_generica(
-                    "Ordens de Serviço"
-                )
+                self.mostrar_ordens_servico
             ),
             (
                 "Aparelhos",
@@ -170,6 +168,24 @@ class HarryAssistentApp(ctk.CTk):
 
         self.trocar_tela(
             DashboardFrame(
+                self.area_conteudo
+            )
+        )
+
+    def mostrar_clientes(self):
+        self.selecionar_botao("Clientes")
+
+        self.trocar_tela(
+            ClientesFrame(
+                self.area_conteudo
+            )
+        )
+
+    def mostrar_ordens_servico(self):
+        self.selecionar_botao("Ordens de Serviço")
+
+        self.trocar_tela(
+            OrdensServicoFrame(
                 self.area_conteudo
             )
         )

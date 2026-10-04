@@ -11,7 +11,8 @@ class OrdemServicoMapper:
         return OrdemServico(
             id_os=dados.get("id_os"),
             id_cliente=dados.get("id_cliente"),
-            data=dados.get("data_entrada"),
+            data_entrada=dados.get("data_entrada"),
+            data_conclusao=dados.get("data_conclusao"),
             status=dados.get("status"),
             prioridade=dados.get("prioridade"),
             mao_obra=dados.get("mao_obra"),
