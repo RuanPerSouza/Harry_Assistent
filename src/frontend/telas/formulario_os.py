@@ -37,8 +37,9 @@ class FormularioOS(ctk.CTkToplevel):
             if self.modo_edicao
             else "Nova Ordem de Serviço"
         )
-        self.geometry("460x620")
-        self.resizable(False, False)
+        self.geometry("460x700")
+        self.resizable(True, True)
+        self.minsize(440, 560)
         self.configure(fg_color=COR_FUNDO)
 
         self.transient(master)

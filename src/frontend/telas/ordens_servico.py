@@ -5,6 +5,7 @@ from backend.services.ordem_servico_service import OrdemServicoService
 from backend.utils.formatadores import formatar_codigo_os, formatar_moeda
 from frontend.componentes.cabecalho import Cabecalho
 from frontend.telas.formulario_os import FormularioOS
+from frontend.telas.janela_aparelhos_os import JanelaAparelhosOS
 from frontend.tema import (
     COR_ATENCAO,
     COR_BORDA,
@@ -156,6 +157,17 @@ class OrdensServicoFrame(ctk.CTkFrame):
         )
         botao_editar.pack(side="left", padx=(0, 8))
 
+        botao_aparelhos = ctk.CTkButton(
+            frame_botoes,
+            text="Aparelhos",
+            width=90,
+            height=32,
+            fg_color=COR_COMPONENTE_HOVER,
+            hover_color=COR_PRIMARIA_HOVER,
+            command=lambda: self.abrir_aparelhos(ordem)
+        )
+        botao_aparelhos.pack(side="left", padx=(0, 8))
+
         info = ctk.CTkFrame(linha, fg_color="transparent")
         info.pack(side="left", fill="x", expand=True, padx=20, pady=14)
 
@@ -202,6 +214,13 @@ class OrdensServicoFrame(ctk.CTkFrame):
             text_color=COR_TEXTO_SECUNDARIO
         )
         label_valor.pack(side="left")
+
+    def abrir_aparelhos(self, ordem):
+        JanelaAparelhosOS(
+            self,
+            id_os=ordem["id_os"],
+            nome_cliente=ordem["nome_cliente"]
+        )
 
     def abrir_nova(self):
         FormularioOS(self, ao_salvar=self.carregar_ordens)

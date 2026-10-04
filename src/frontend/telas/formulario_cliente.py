@@ -31,13 +31,17 @@ class FormularioCliente(ctk.CTkToplevel):
         self.title(
             "Editar Cliente" if self.modo_edicao else "Novo Cliente"
         )
-        self.geometry("420x480")
-        self.resizable(False, False)
+        self.geometry("420x560")
+        self.resizable(True, True)
+        self.minsize(400, 460)
         self.configure(fg_color=COR_FUNDO)
 
         # Mantém a janela sempre na frente da principal
         self.transient(master)
-        self.grab_set()
+
+        self.after(10, self.lift)
+        self.after(10, self.focus_force)
+        self.after(10, self.grab_set)
 
         self.criar_campos()
 
