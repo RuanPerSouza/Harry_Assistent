@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
 import customtkinter as ctk
@@ -242,14 +243,25 @@ class FormularioOS(ctk.CTkToplevel):
             self.texto_observacoes.get("1.0", "end").strip() or None
         )
 
+        status_selecionado = self.combo_status.get()
+
         if self.modo_edicao:
-            # Preserva campos não editados nesta tela (pagamento, datas)
+            # Preserva campos não editados nesta tela (pagamento, datas).
+            # Marca a conclusão automaticamente ao entregar a OS, pra
+            # alimentar o cálculo de receita do Dashboard.
+            data_conclusao = self.ordem["data_conclusao"]
+
+            if status_selecionado == "Entregue" and data_conclusao is None:
+                data_conclusao = datetime.now()
+            elif status_selecionado != "Entregue":
+                data_conclusao = None
+
             ordem = OrdemServico(
                 id_os=self.ordem["id_os"],
                 id_cliente=id_cliente,
                 data_entrada=self.ordem["data_entrada"],
-                data_conclusao=self.ordem["data_conclusao"],
-                status=self.combo_status.get(),
+                data_conclusao=data_conclusao,
+                status=status_selecionado,
                 prioridade=self.combo_prioridade.get(),
                 mao_obra=mao_obra,
                 desconto=desconto,

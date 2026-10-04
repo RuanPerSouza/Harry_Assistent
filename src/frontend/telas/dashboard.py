@@ -2,6 +2,8 @@ from datetime import datetime
 
 import customtkinter as ctk
 
+from backend.services.dashboard_service import DashboardService
+from backend.utils.formatadores import formatar_moeda
 from frontend.componentes.cabecalho import Cabecalho
 from frontend.componentes.card import CardInformacao
 from frontend.componentes.painel_status import PainelStatus
@@ -27,6 +29,8 @@ class DashboardFrame(ctk.CTkFrame):
         self.criar_saudacao()
         self.criar_cards()
         self.criar_painel_status()
+
+        self.atualizar_indicadores()
 
     def criar_saudacao(self):
         hora = datetime.now().hour
@@ -138,3 +142,25 @@ class DashboardFrame(ctk.CTkFrame):
             padx=30,
             pady=(0, 20)
         )
+
+    def atualizar_indicadores(self):
+        indicadores = DashboardService.obter_indicadores()
+
+        self.card_ordens.atualizar_valor(
+            str(indicadores["os_em_andamento"])
+        )
+        self.card_clientes.atualizar_valor(
+            str(indicadores["clientes_cadastrados"])
+        )
+        self.card_receita.atualizar_valor(
+            formatar_moeda(indicadores["receita_mes"])
+        )
+
+        if indicadores["os_em_andamento"] > 0:
+            self.painel_status.atualizar_mensagem(
+                mensagem=(
+                    f"Você tem {indicadores['os_em_andamento']} "
+                    f"Ordem(ns) de Serviço em andamento."
+                ),
+                tipo="atencao"
+            )
